@@ -20,27 +20,29 @@ public class MovieSteps {
 
   @Given("a movie {string} rated {string} released in {int} is in the catalog")
   public void addMovieToTheCatalog(String title, String label, int year) {
-    throw new io.cucumber.java.PendingException("TODO 6.1: add to movies, released 1 January");
+    movies.add(new Movie(title, Rating.fromLabel(label), "", LocalDate.of(year, 1, 1)));
   }
 
   /** Keeps only the titles, because the Then steps compare titles. */
   @When("I filter movies by rating {string}")
   public void filterMoviesByRating(String label) {
-    throw new io.cucumber.java.PendingException("TODO 6.2: titles with this rating into shown");
+    shown = new MovieCatalog(movies).byRating(Rating.fromLabel(label)).stream()
+            .map(Movie::title)
+            .toList();
   }
 
   @Then("I should see {string}")
   public void shouldSee(String title) {
-    throw new io.cucumber.java.PendingException("TODO 6.3: shown has this title");
+    assertThat(shown).contains(title);
   }
 
   @Then("I should not see {string}")
   public void shouldNotSee(String title) {
-    throw new io.cucumber.java.PendingException("TODO 6.4: shown does not have this title");
+    assertThat(shown).doesNotContain(title);
   }
 
   @Then("I should see no movies")
   public void shouldSeeNoMovies() {
-    throw new io.cucumber.java.PendingException("TODO 6.5: shown is empty");
+    assertThat(shown).isEmpty();
   }
 }

@@ -1,5 +1,9 @@
 Feature: Filter movies by rating
 
+  Background:
+    Given a movie "Men In Black" rated "PG-13" released in 1997 is in the catalog
+    And a movie "Alien" rated "R" released in 1979 is in the catalog
+
   Scenario: Happy path only the chosen rating is shown
     When I filter movies by rating "PG-13"
     Then I should see "Men In Black"
