@@ -12,7 +12,10 @@ import th.ac.cdti.rottenpotatoes.domain.Movie;
 import th.ac.cdti.rottenpotatoes.domain.MovieCatalog;
 import th.ac.cdti.rottenpotatoes.domain.Rating;
 
-/** Step definitions for movie_filter.feature, run directly against the plain-Java domain. */
+/**
+ * Step definitions for movie_filter.feature and movie_sort.feature, run directly against the
+ * plain-Java domain.
+ */
 public class MovieSteps {
 
   private final List<Movie> movies = new ArrayList<>();
@@ -27,6 +30,13 @@ public class MovieSteps {
   @When("I filter movies by rating {string}")
   public void filterMoviesByRating(String label) {
     shown = new MovieCatalog(movies).byRating(Rating.fromLabel(label)).stream()
+            .map(Movie::title)
+            .toList();
+  }
+
+  @When("I see movies newest first")
+  public void seeMoviesNewestFirst() {
+    shown = new MovieCatalog(movies).newestFirst(movies.size()).stream()
             .map(Movie::title)
             .toList();
   }
